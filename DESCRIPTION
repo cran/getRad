@@ -1,6 +1,6 @@
 Package: getRad
 Title: Download Radar Data for Biological Research
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(
     person("Bart", "Kranstauber", , "b.kranstauber@uva.nl", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8303-780X", affiliation = "University of Amsterdam")),
@@ -42,7 +42,7 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 Config/Needs/website: rmarkdown, leafpop, htmltools
 NeedsCompilation: no
-Packaged: 2025-08-25 17:49:05 UTC; bart
+Packaged: 2025-09-29 10:01:41 UTC; bart
 Author: Bart Kranstauber [aut, cre] (ORCID:
     <https://orcid.org/0000-0001-8303-780X>, affiliation: University of
     Amsterdam),
@@ -64,4 +64,4 @@ Author: Bart Kranstauber [aut, cre] (ORCID:
   Biodiversa+ [fnd] (https://hirad.science/)
 Maintainer: Bart Kranstauber <b.kranstauber@uva.nl>
 Repository: CRAN
-Date/Publication: 2025-08-25 18:00:02 UTC
+Date/Publication: 2025-09-29 10:20:02 UTC

@@ -1,3 +1,11 @@
+# getRad 0.2.2
+
+* Support downloading Slovakian polar volume data (#124).
+* Add retry attempts to `get_weather_radars` for NEXRAD to prevent failure (#116).
+* Update of NEXRAD url (#118).
+* Fix CRAN warning where cache was not cleaned after tests (#122).
+* Resolve `withr` error for Danish radars.
+
 # getRad 0.2.1
 
 * A bug (#101) in `get_vpts()` was fixed that caused the function to only return the first day of an interval, regardless of the length of the interval (#105).
