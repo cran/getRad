@@ -26,10 +26,12 @@
 #'   If not provided, it will be fetched from via the internet.
 #' @return A tibble with VPTS data.
 #' @keywords internal
-get_vpts_aloft <- function(radar_odim_code,
-                           rounded_interval,
-                           source = c("baltrad", "uva", "ecog-04003"),
-                           coverage = get_vpts_coverage_aloft()) {
+get_vpts_aloft <- function(
+  radar_odim_code,
+  rounded_interval,
+  source = c("baltrad", "uva", "ecog-04003"),
+  coverage = get_vpts_coverage_aloft()
+) {
   # rename source argument for readability
   selected_source <- source
 
@@ -110,16 +112,21 @@ get_vpts_aloft <- function(radar_odim_code,
     # Add a column with the radar source to not lose this information
     purrr::map2(
       s3_paths,
-      ~ dplyr::mutate(.x,
+      ~ dplyr::mutate(
+        .x,
         source = string_extract(
           .y,
           ".+(?=\\/daily)"
         )
       )
     ) |>
+    purrr::keep(.p = ~ as.logical(nrow(.x))) |>
     purrr::list_rbind() |>
     # Move the source column to the front, where it makes sense
-    dplyr::relocate(dplyr::all_of("source"), .before = dplyr::all_of("radar")) |>
+    dplyr::relocate(
+      dplyr::all_of("source"),
+      .before = dplyr::all_of("radar")
+    ) |>
     # Overwrite the radar column with the radar_odim_date, all other values are
     # considered invalid for aloft
     dplyr::mutate(radar = radar_odim_code)
