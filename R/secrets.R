@@ -23,7 +23,7 @@ set_secret <- function(name, secret = NULL) {
   rlang::check_installed("keyring", "to manage secrets in getRad")
   if (!rlang::is_scalar_character(name)) {
     cli::cli_abort(
-      "{.arg name} should be a scalar character",
+      "{.arg name} must be a single character value.",
       class = "getRad_error_set_secret_no_scalar_character"
     )
   }
@@ -38,7 +38,7 @@ set_secret <- function(name, secret = NULL) {
     getOption(
       "getRad.key_prefix",
       default = cli::cli_abort(
-        "The option `getRad.key_prefix` is not found",
+        "Can't find the option {.val getRad.key_prefix}.",
         class = "getRad_error_key_prefix_not_found_setting"
       )
     ),
@@ -49,10 +49,6 @@ set_secret <- function(name, secret = NULL) {
 }
 
 list_secrets <- list(
-  "dk_api_key" = c(
-    i = "To obtain an api key for danish radar data please visit {.url https://dmiapi.govcloud.dk/#!/}, here a user account can be created  ({.href [documentation](https://opendatadocs.dmi.govcloud.dk/en/Authentication)}) and a api key (called {.arg radardataAPI}) can be obtained.",
-    i = "Also confirm you adhere to the terms of use {.url https://opendatadocs.dmi.govcloud.dk/Terms_of_Use})."
-  ),
   "nl_api_key" = c(
     i = "To obtain an api key for the Netherlands visit {.url https://developer.dataplatform.knmi.nl/open-data-api#token}.",
     i = "On the refered page also an public token is available for exploratory use this could be a easy option."
@@ -65,7 +61,7 @@ get_secret <- function(name) {
   rlang::check_installed("keyring", "to manage secrets in getRad")
   if (!rlang::is_scalar_character(name)) {
     cli::cli_abort(
-      "{.arg name} should be a scalar character",
+      "{.arg name} must be a single character value.",
       class = "getRad_error_get_secret_no_scalar_character"
     )
   }
@@ -73,7 +69,7 @@ get_secret <- function(name) {
     getOption(
       "getRad.key_prefix",
       default = cli::cli_abort(
-        "The option `getRad.key_prefix` is not found",
+        "Can't find the option {.val getRad.key_prefix}.",
         class = "getRad_error_key_prefix_not_found_getting"
       )
     ),
@@ -82,8 +78,8 @@ get_secret <- function(name) {
   if (!(sname %in% keyring::key_list(sname)$service)) {
     cli::cli_abort(
       c(
-        x = "The {.arg {sname}} secret is not in the keyring.",
-        i = 'Please use {.code set_secret("{name}")} to store the secret.'
+        "Can't find secret {.arg {sname}} in the keyring.",
+        "i" = "Please use {.code set_secret(\"{name}\")} to store the secret. Note that the prefix is automatically added in {.fun set_secret}."
       ),
       class = "getRad_error_secret_not_found"
     )

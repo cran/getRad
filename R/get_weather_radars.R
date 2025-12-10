@@ -8,9 +8,9 @@
 #' @details
 #' The source files for this function are:
 #' - For `opera`: [OPERA_RADARS_DB.json](
-#' http://eumetnet.eu/wp-content/themes/aeron-child/observations-programme/current-activities/opera/database/OPERA_Database/OPERA_RADARS_DB.json) (main/current)
+#' http://www.eumetnet.eu/wp-content/themes/aeron-child/observations-programme/current-activities/opera/database/OPERA_Database/OPERA_RADARS_DB.json) (main/current)
 #' and [OPERA_RADARS_ARH_DB.json](
-#' http://eumetnet.eu/wp-content/themes/aeron-child/observations-programme/current-activities/opera/database/OPERA_Database/OPERA_RADARS_ARH_DB.json) (archive).
+#' http://www.eumetnet.eu/wp-content/themes/aeron-child/observations-programme/current-activities/opera/database/OPERA_Database/OPERA_RADARS_ARH_DB.json) (archive).
 #' A column `origin` is added to indicate which file the metadata were derived
 #' from.
 #' - For `nexrad`: [nexrad-stations.txt](https://www.ncei.noaa.gov/access/homr/file/nexrad-stations.txt).
@@ -39,8 +39,7 @@ get_weather_radars <- function(
     !rlang::is_character(source) || any(is.na(source)) || length(source) == 0
   ) {
     cli::cli_abort(
-      "{.arg source} is not valid, it should be an {.cls character}
-                   vector with a length of atleast one not contain NA values.",
+      "{.arg source} must be a character (vector).",
       class = "getRad_error_weather_radar_source_not_character"
     )
   }
@@ -96,19 +95,25 @@ get_weather_radars_opera <- function(
 
   # Read source JSON files from OPERA
   radars_main_url <-
-    paste(
-      sep = "/",
-      "http://eumetnet.eu/wp-content/themes/aeron-child",
-      "observations-programme/current-activities/opera/database",
-      "OPERA_Database/OPERA_RADARS_DB.json"
+    getOption(
+      "getRad.opera_database_url",
+      default = paste(
+        sep = "/",
+        "http://www.eumetnet.eu/wp-content/themes/aeron-child",
+        "observations-programme/current-activities/opera/database",
+        "OPERA_Database/OPERA_RADARS_DB.json"
+      )
     )
 
   radars_archive_url <-
-    paste(
-      sep = "/",
-      "http://eumetnet.eu/wp-content/themes/aeron-child",
-      "observations-programme/current-activities/opera/database",
-      "OPERA_Database/OPERA_RADARS_ARH_DB.json"
+    getOption(
+      "getRad.opera_database_archive_url",
+      default = paste(
+        sep = "/",
+        "http://www.eumetnet.eu/wp-content/themes/aeron-child",
+        "observations-programme/current-activities/opera/database",
+        "OPERA_Database/OPERA_RADARS_ARH_DB.json"
+      )
     )
 
   urls <- list(
