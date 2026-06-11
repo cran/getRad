@@ -21,9 +21,38 @@
     ),
     getRad.aloft_data_url = "https://aloftdata.s3-eu-west-1.amazonaws.com",
     getRad.nexrad_data_url = "https://unidata-nexrad-level2.s3.amazonaws.com",
+    getRad.birdcast_vpts_data_url = "https://birdcastdata.s3.amazonaws.com",
     getRad.cache = cachem::cache_mem(
       max_size = 128 * 1024^2,
       max_age = 60^2 * 24
+    ),
+    getRad.vpts_col_types = list(
+      radar = vroom::col_factor(),
+      datetime = vroom::col_datetime(),
+      height = vroom::col_integer(),
+      u = vroom::col_double(),
+      v = vroom::col_double(),
+      w = vroom::col_double(),
+      ff = vroom::col_double(),
+      dd = vroom::col_double(),
+      sd_vvp = vroom::col_double(),
+      gap = vroom::col_logical(),
+      eta = vroom::col_double(),
+      dens = vroom::col_double(),
+      dbz = vroom::col_double(),
+      dbz_all = vroom::col_double(),
+      n = vroom::col_integer(),
+      n_dbz = vroom::col_integer(),
+      n_all = vroom::col_integer(),
+      n_dbz_all = vroom::col_integer(),
+      rcs = vroom::col_double(),
+      sd_vvp_threshold = vroom::col_double(),
+      vcp = vroom::col_integer(),
+      radar_longitude = vroom::col_double(),
+      radar_latitude = vroom::col_double(),
+      radar_height = vroom::col_integer(),
+      radar_wavelength = vroom::col_double(),
+      source_file = vroom::col_character()
     )
   )
   toset <- !(names(op.getRad) %in% names(op))
@@ -34,3 +63,11 @@
   invisible()
 }
 rlang::on_load(rlang::local_use_cli(inline = TRUE))
+# see ?usethis::use_release_issue() #nolint
+release_bullets <- function() {
+  c(
+    "Update codemeta.json with: `codemetar::write_codemeta()`",
+    "Update CITATION.cff with `cffr::cff_write(dependencies = FALSE)`
+    (after incrementing version)"
+  )
+}

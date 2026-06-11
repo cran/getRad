@@ -5,7 +5,7 @@
 #'
 #' @param urls A character vector with urls to h5 files to read
 #' @param ... arguments to bioRad::read_pvolfile
-#' @param call
+#' @inheritParams radar_recode call
 #'
 #' @returns a pvol
 #' @noRd
@@ -42,9 +42,12 @@ read_pvol_from_url_per_param <- function(
     bioRad::attribute_table
   )
   all_params_same_attributes <- all(unlist(lapply(
-    lapply(list_of_attribute_tables[-1], dplyr::select, -"param"),
-    all.equal,
-    dplyr::select(list_of_attribute_tables[[1]], -"param")
+    lapply(
+      lapply(list_of_attribute_tables[-1], dplyr::select, -"param"),
+      all.equal,
+      dplyr::select(list_of_attribute_tables[[1]], -"param")
+    ),
+    isTRUE
   )))
   if (!all_params_same_attributes) {
     cli::cli_abort(

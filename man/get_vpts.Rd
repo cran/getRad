@@ -7,8 +7,10 @@
 get_vpts(
   radar,
   datetime,
-  source = c("baltrad", "uva", "ecog-04003", "rmi"),
-  return_type = c("vpts", "tibble")
+  source = c("baltrad", "uva", "ecog-04003", "rmi", "birdcast", "dark_ecology"),
+  return_type = c("vpts", "tibble"),
+  ...,
+  path = NULL
 )
 }
 \arguments{
@@ -26,15 +28,20 @@ downloaded.
 \item A \code{\link[lubridate:interval]{lubridate::interval()}}, between which all data files are downloaded.
 }}
 
-\item{source}{Source of the data. One of \code{"baltrad"}, \code{"uva"}, \code{"ecog-04003"}
-or \code{"rmi"}. Only one source can be queried at a time. If not provided,
+\item{source}{Source of the data. One of \code{"baltrad"}, \code{"uva"}, \code{"ecog-04003"},
+\code{"rmi"}, \code{"dark_ecology"} or \code{"birdcast"}. Only one source can be queried at a time. If not provided,
 \code{"baltrad"} is used.}
 
 \item{return_type}{Type of object that should be returned. Either:
 \itemize{
 \item \code{"vpts"}: vpts object(s) (default).
-\item \code{"tibble"}: a \code{\link[dplyr:reexports]{dplyr::tibble()}}.
+\item \code{"tibble"}: a \code{\link[dplyr:tibble]{dplyr::tibble()}}.
 }}
+
+\item{...}{Optional arguments, to \code{\link[bioRad:read_cajun]{bioRad::read_cajun()}} when reading \code{"dark_ecology"} data.}
+
+\item{path}{A local directory where data are read from. If specified the file structure
+is taken from the \code{source} argument. See details for an explanation of the file format.}
 }
 \value{
 Either a vpts object, a list of vpts objects or a tibble. See
@@ -43,13 +50,37 @@ Either a vpts object, a list of vpts objects or a tibble. See
 \description{
 Gets vertical profile time series data from supported sources and returns it
 as a (list of) of \link[bioRad:summary.vpts]{vpts objects} or a
-\code{\link[dplyr:reexports]{dplyr::tibble()}}.
+\code{\link[dplyr:tibble]{dplyr::tibble()}}.
 }
 \details{
 For more details on supported sources, see \code{vignette("supported_sources")}.
+
+In case data is read from a directory, file in the directory
+should be structures like they are in the monthly folders of the aloft
+repository. To specify an alternative structure the
+\code{"getRad.vpts_local_path_format_aloft"} option can be used. This can, for
+example, be used to read daily data. Some example options for the glue
+formatters are:
+\itemize{
+\item \code{"{radar}/{year}/{radar}_vpts_{year}{month}.csv.gz"}: The default format,
+the same structure as the monthly directories in the aloft repository. Or as
+contained in the \code{tgz} files in the aloft zenodo repository.
+\item \code{"{substr(radar, 1,2)}/{radar}/{year}/{radar}_vpts_{year}{month}.csv.gz"}:
+The format as in the files in the zenodo aloft repository
+\item \code{"{radar}/{year}/{radar}_vpts_{year}{month}{day}.csv"}: The format as daily
+data is stored in aloft data
+}
+
+A similar option (\code{"getRad.vpts_local_path_format_aloft"}) exist for reading
+dark ecology data. The default value here is \code{"getRad.vpts_local_path_format_aloft"}.
+Here the option does refer to the directories where the dark ecology files
+should be searched.
+
+Besides the examples above there is a \code{date} object available for formatting. Note
+that \code{day} and \code{month} are zero padded character strings in the glue formating.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 # Get VPTS data for a single radar and date
 get_vpts(radar = "bejab", datetime = "2023-01-01", source = "baltrad")
 get_vpts(radar = "bejab", datetime = "2020-01-19", source = "rmi")
@@ -82,5 +113,7 @@ get_vpts(
   source = "baltrad",
   return_type = "tibble"
 )
+#' Get VPTS data from the public BirdCast NEXRAD archive
+get_vpts(radar = "KABR", datetime = "2023-01-01", source = "birdcast")
 \dontshow{\}) # examplesIf}
 }

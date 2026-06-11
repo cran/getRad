@@ -1,6 +1,6 @@
 Package: getRad
 Title: Download Radar Data for Biological Research
-Version: 0.2.4
+Version: 0.3.0
 Authors@R: c(
     person("Bart", "Kranstauber", , "b.kranstauber@uva.nl", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8303-780X", affiliation = "University of Amsterdam")),
@@ -33,16 +33,16 @@ Depends: R (>= 4.1.0)
 Imports: bioRad, cachem, cli, dplyr (>= 1.1.0), glue, httr2 (>= 1.1.1),
         lubridate, purrr (>= 1.0.0), rlang, tibble, tools, utils,
         vroom, withr, xml2
-Suggests: askpass, htmltools, keyring, knitr, leaflet, rhdf5,
+Suggests: askpass, fs, htmltools, keyring, knitr, leaflet, rhdf5,
         rnaturalearth, rnaturalearthdata, sf, testthat (>= 3.0.0),
         tidyr, vol2birdR
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.3.2
 Config/Needs/website: rmarkdown, leafpop, htmltools
+Config/roxygen2/version: 8.0.0
 NeedsCompilation: no
-Packaged: 2025-12-10 13:45:23 UTC; bart
+Packaged: 2026-06-11 15:00:48 UTC; bart
 Author: Bart Kranstauber [aut, cre] (ORCID:
     <https://orcid.org/0000-0001-8303-780X>, affiliation: University of
     Amsterdam),
@@ -64,4 +64,4 @@ Author: Bart Kranstauber [aut, cre] (ORCID:
   Biodiversa+ [fnd] (https://hirad.science/)
 Maintainer: Bart Kranstauber <b.kranstauber@uva.nl>
 Repository: CRAN
-Date/Publication: 2025-12-10 14:10:10 UTC
+Date/Publication: 2026-06-11 15:20:02 UTC

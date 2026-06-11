@@ -4,11 +4,14 @@
 \alias{get_vpts_coverage}
 \title{Get VPTS file coverage from supported sources}
 \usage{
-get_vpts_coverage(source = c("baltrad", "uva", "ecog-04003", "rmi"), ...)
+get_vpts_coverage(
+  source = c("baltrad", "uva", "ecog-04003", "rmi", "birdcast"),
+  ...
+)
 }
 \arguments{
 \item{source}{Source of the data. One or more of \code{"baltrad"}, \code{"uva"},
-\code{"ecog-04003"} or \code{"rmi"}. If not provided, \code{"baltrad"} is used.
+\code{"ecog-04003"} or \code{"rmi"} or \code{"birdcast"}. If not provided, \code{"baltrad"} is used.
 Alternatively \code{"all"} can be used if data from all sources should be
 returned.}
 
@@ -22,7 +25,7 @@ A \code{data.frame} or \code{tibble} with at least three columns, \code{source},
 Gets the VPTS file coverage from supported sources per radar and date.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 get_vpts_coverage()
 \dontshow{\}) # examplesIf}
 }
